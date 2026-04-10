@@ -1,12 +1,7 @@
 ﻿using BWJ.Core;
 using RaspberryBeret.ReferenceData;
 using RaspberryBeret.Typography;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RaspberryBeret;
 public sealed class PdfService
@@ -78,5 +73,10 @@ public sealed class PdfService
         }
 
         return data;
+    }
+
+    public void RegisterTypeface(ITypefaceService typefaceService)
+    {
+        TypographyService.RegisterTypeface(typefaceService);
     }
 }
