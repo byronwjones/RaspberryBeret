@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RaspberryBeret", "Raspberry
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RaspberryBeret.Azure", "RaspberryBeret.Azure\RaspberryBeret.Azure.csproj", "{AB271786-8AD9-4F66-9AD9-AD59D4ADE1CA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RaspberryBeret.Objects", "RaspberryBeret.Objects\RaspberryBeret.Objects.csproj", "{66F94A75-2BCB-4D53-A1F6-6F64A38A4F7E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{AB271786-8AD9-4F66-9AD9-AD59D4ADE1CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB271786-8AD9-4F66-9AD9-AD59D4ADE1CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AB271786-8AD9-4F66-9AD9-AD59D4ADE1CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66F94A75-2BCB-4D53-A1F6-6F64A38A4F7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66F94A75-2BCB-4D53-A1F6-6F64A38A4F7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66F94A75-2BCB-4D53-A1F6-6F64A38A4F7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66F94A75-2BCB-4D53-A1F6-6F64A38A4F7E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -2,6 +2,9 @@
 using RaspberryBeret.DataBinding;
 using RaspberryBeret.Parsing;
 using RaspberryBeret.Styling;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace RaspberryBeret.Elements;
 internal class Element
@@ -17,7 +20,7 @@ internal class Element
         }
 
         Tag = tag;
-        Metadata = ElementInfoCenter.GetInfoFor(tag.Name!) ?? throw new Exception($"Encountered unsupported element <{tag.Name}>");
+        Metadata = ElementMetadataService.GetInfoFor(tag.Name!) ?? throw new Exception($"Encountered unsupported element <{tag.Name}>");
 
         if (tag.Name != "textrun")
         {
@@ -39,7 +42,7 @@ internal class Element
     /// <summary>
     /// Validation information about the element represented by this instance
     /// </summary>
-    public ElementInfo Metadata { get; private set; }
+    public ElementMetadata Metadata { get; private set; }
 
     public Element[] Children
     {

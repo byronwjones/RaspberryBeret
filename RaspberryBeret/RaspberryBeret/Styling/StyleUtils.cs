@@ -1,5 +1,8 @@
 ﻿using BWJ.Core;
 using RaspberryBeret.Elements;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace RaspberryBeret.Styling;
@@ -184,7 +187,7 @@ internal static class StyleUtils
         string value = s.Substring(separatorIndex + 1).Trim();
 
         //get metadata, which can validate and properly format the string value
-        var metadata = StyleInfoCenter.GetStyleMetadata(name);
+        var metadata = StyleMetadataService.GetStyleMetadata(name);
         if (metadata == null) { return new List<Style>(); }
 
         return metadata.ExtractStylesFromValue(value, specificity);

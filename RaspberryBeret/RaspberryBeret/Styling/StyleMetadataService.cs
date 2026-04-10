@@ -1,12 +1,14 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace RaspberryBeret.Styling;
-internal static class StyleInfoCenter
+internal static class StyleMetadataService
 {
-    static StyleInfoCenter()
+    static StyleMetadataService()
     {
         allInfo = [
-            new Border(),
+            new PdfmlBorder(),
             new BorderTop(),
             new BorderRight(),
             new BorderBottom(),
@@ -16,7 +18,7 @@ internal static class StyleInfoCenter
             new BorderRightWidth(),
             new BorderBottomWidth(),
             new BorderLeftWidth(),
-            new BorderStyle(),
+            new PdfmlBorderStyle(),
             new BorderTopStyle(),
             new BorderRightStyle(),
             new BorderBottomStyle(),
@@ -27,7 +29,7 @@ internal static class StyleInfoCenter
             new BorderBottomColor(),
             new BorderLeftColor(),
             new BackgroundColor(),
-            new Color(),
+            new ColorStyle(),
             new FontFamily(),
             new FontSize(),
             new FontWeight(),
@@ -55,7 +57,7 @@ internal static class StyleInfoCenter
             ];
     }
 
-    public static StyleInfo? GetStyleMetadata(string? styleName)
+    public static StyleMetadata? GetStyleMetadata(string? styleName)
     {
         if (styleName == null) { return null; }
         styleName = styleName.ToLower();
@@ -63,12 +65,12 @@ internal static class StyleInfoCenter
         return allInfo.FirstOrDefault(m => m.Name == styleName);
     }
 
-    private static readonly StyleInfo[] allInfo;
+    private static readonly StyleMetadata[] allInfo;
 }
 
-internal class Border : StyleInfo
+internal class PdfmlBorder : StyleMetadata
 {
-    public Border()
+    public PdfmlBorder()
     {
         Name = "border";
         Inheritable = false;
@@ -145,7 +147,7 @@ internal class BorderLeft : BorderX
         template = "border-left-{0}";
     }
 }
-internal abstract class BorderX : StyleInfo
+internal abstract class BorderX : StyleMetadata
 {
     public BorderX()
     {
@@ -238,7 +240,7 @@ internal class BorderLeftColor : BorderXColor
         Name = "border-left-color";
     }
 }
-internal abstract class BorderXColor : ColorStyle
+internal abstract class BorderXColor : ColourStyle
 {
     public BorderXColor()
     {
@@ -292,9 +294,9 @@ internal abstract class BorderXWidth : NumericStyle
     }
 }
 
-internal class BorderStyle : FourSizesStyle
+internal class PdfmlBorderStyle : FourSizesStyle
 {
-    public BorderStyle()
+    public PdfmlBorderStyle()
     {
         Name = "border-style";
         Inheritable = false;
@@ -340,7 +342,7 @@ internal abstract class BorderXStyle : SetValueOptionsStyle
     }
 }
 
-internal class BackgroundColor : ColorStyle
+internal class BackgroundColor : ColourStyle
 {
     public BackgroundColor()
     {
@@ -349,16 +351,16 @@ internal class BackgroundColor : ColorStyle
     }
 }
 
-internal class Color : ColorStyle
+internal class ColorStyle : ColourStyle
 {
-    public Color()
+    public ColorStyle()
     {
         Name = "color";
         Inheritable = true;
     }
 }
 
-internal class FontFamily : StyleInfo
+internal class FontFamily : StyleMetadata
 {
     public FontFamily()
     {
@@ -596,7 +598,7 @@ internal class MaxHeight : NumericStyle
     }
 }
 
-internal abstract class ColorStyle : StyleInfo
+internal abstract class ColourStyle : StyleMetadata
 {
     public override List<Style> ExtractStylesFromValue(string value, int specificity)
     {
@@ -613,7 +615,7 @@ internal abstract class ColorStyle : StyleInfo
         return styles;
     }
 }
-internal abstract class FourSizesStyle : StyleInfo
+internal abstract class FourSizesStyle : StyleMetadata
 {
     protected string template = string.Empty;
 
@@ -686,7 +688,7 @@ internal abstract class FourSizesStyle : StyleInfo
         return styles;
     }
 }
-internal abstract class SetValueOptionsStyle : StyleInfo
+internal abstract class SetValueOptionsStyle : StyleMetadata
 {
     protected string[] acceptedValues = [];
 
@@ -710,7 +712,7 @@ internal abstract class SetValueOptionsStyle : StyleInfo
         return styles;
     }
 }
-internal abstract class NumericStyle : StyleInfo
+internal abstract class NumericStyle : StyleMetadata
 {
     public override List<Style> ExtractStylesFromValue(string value, int specificity)
     {
@@ -728,7 +730,7 @@ internal abstract class NumericStyle : StyleInfo
         return styles;
     }
 }
-internal abstract class PercentableStyle : StyleInfo
+internal abstract class PercentableStyle : StyleMetadata
 {
     public override List<Style> ExtractStylesFromValue(string value, int specificity)
     {

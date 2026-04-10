@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace RaspberryBeret.Styling;
-internal abstract class StyleInfo
+internal abstract class StyleMetadata
 {
     public string Name { get; protected set; } = string.Empty;
     public bool Inheritable { get; protected set; }
@@ -33,7 +31,7 @@ internal abstract class StyleInfo
     protected List<Style> appendStylesToStyleList(string styleName, string value,
         int specificity, bool important, List<Style> styles)
     {
-        var styleMeta = StyleInfoCenter.GetStyleMetadata(styleName);
+        var styleMeta = StyleMetadataService.GetStyleMetadata(styleName);
         if(styleMeta is not null)
         {
             styles.AddRange(

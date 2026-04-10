@@ -1,4 +1,6 @@
-﻿namespace RaspberryBeret.Parsing;
+﻿using System;
+
+namespace RaspberryBeret.Parsing;
 public class ParsingException : Exception
 {
     public ParsingException(string message, string sourcePDFML, int sourceErrorIndex) :

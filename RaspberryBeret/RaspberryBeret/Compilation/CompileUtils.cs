@@ -4,6 +4,10 @@ using RaspberryBeret.Elements;
 using RaspberryBeret.Parsing;
 using RaspberryBeret.ReferenceData;
 using RaspberryBeret.Styling;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace RaspberryBeret.Compilation;
@@ -36,7 +40,12 @@ internal static class CompileUtils
             throw new ParsingException("Document is missing root element 'pdfml'", pdfml, 0);
         }
 
-        dom.RootPath = rootPath;
+        if(rootPath is not null
+            && DataUtils.IsSourceWebBased(rootPath) == false
+            && DataUtils.IsSourceCloudStorage(rootPath) == false)
+        {
+            dom.RootPath = rootPath;
+        }
         ResolveIncludesForTemplatePrecompilation(dom, cloudService);
         ResolveStylesForTemplatePrecompilation(dom, cloudService);
 
@@ -79,7 +88,7 @@ internal static class CompileUtils
                 if (DataUtils.IsSourceCloudStorage(src))
                 {
                     img.Tag.Attributes["src"] =
-                        DataUtils.GetBase64StringFromBlob(src, cloudService, img) ?? string.Empty;
+                        DataUtils.GetBase64StringFromCloudResource(src, cloudService, img) ?? string.Empty;
                 }
                 else if(DataUtils.IsSourceWebBased(src))
                 {
@@ -632,7 +641,7 @@ internal static class CompileUtils
         {
             if (DataUtils.IsSourceCloudStorage(src))
             {
-                snippet = DataUtils.GetTextFromBlob(src, cloudService);
+                snippet = DataUtils.GetTextFromCloudResource(src, cloudService);
             }
             else if(DataUtils.IsSourceWebBased(src))
             {
@@ -695,7 +704,7 @@ internal static class CompileUtils
         {
             if (DataUtils.IsSourceCloudStorage(src))
             {
-                css = DataUtils.GetTextFromBlob(src, cloudService);
+                css = DataUtils.GetTextFromCloudResource(src, cloudService);
             }
             else if(DataUtils.IsSourceWebBased(src))
             {

@@ -2,6 +2,8 @@
 using BWJ.Net.Http.RequestBuilder;
 using RaspberryBeret.Elements;
 using RaspberryBeret.Parsing;
+using System;
+using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -88,9 +90,9 @@ internal static class DataUtils
     /// <param name="element">(Optional) PDFML element from which source string was
     /// obtained, used for error reporting</param>
     /// <returns>Byte array contents of resource</returns>
-    public static byte[] GetDataFromBlob(string src, ICloudResourceService? cloudService, Element? element = null)
+    public static byte[] GetDataFromCloudResource(string src, ICloudResourceService? cloudService, Element? element = null)
     {
-        var cloudRef = GetCloudReference(nameof(GetDataFromBlob), src, cloudService, element);
+        var cloudRef = GetCloudReference(nameof(GetDataFromCloudResource), src, cloudService, element);
         var data = cloudService!.Fetch(cloudRef).Result;
         return data;
     }
@@ -124,9 +126,9 @@ internal static class DataUtils
     /// <param name="element">(Optional) PDFML element from which source string was
     /// obtained, used for error reporting</param>
     /// <returns>Text contents of blob</returns>
-    public static string GetTextFromBlob(string src, ICloudResourceService? cloudService, Element? element = null)
+    public static string GetTextFromCloudResource(string src, ICloudResourceService? cloudService, Element? element = null)
     {
-        var data = GetDataFromBlob(src, cloudService, element);
+        var data = GetDataFromCloudResource(src, cloudService, element);
         return GetStringFromData(data);
     }
 
@@ -154,9 +156,9 @@ internal static class DataUtils
     /// obtained, used for error reporting</param>
     /// <returns>Base-64 encoded cloud resource data, prefixed by 'base64:',
     /// or null if file does not exist/content is empty</returns>
-    public static string? GetBase64StringFromBlob(string src, ICloudResourceService? cloudService, Element element = null)
+    public static string? GetBase64StringFromCloudResource(string src, ICloudResourceService? cloudService, Element? element = null)
     {
-        var data = GetDataFromBlob(src, cloudService, element);
+        var data = GetDataFromCloudResource(src, cloudService, element);
         return (data.Length > 0) ?
             "base64:" + Convert.ToBase64String(data) : null;
     }

@@ -1,14 +1,10 @@
 ﻿using RaspberryBeret.Styling;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RaspberryBeret.Elements;
-internal abstract class ElementInfo
+internal abstract class ElementMetadata
 {
-    public ElementInfo()
+    public ElementMetadata()
     {
         GroupMembership = Array.Empty<ElementGroup>();
         DefaultStyles = Array.Empty<Style>();

@@ -8,9 +8,9 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace RaspberryBeret.Elements;
-internal static class ElementInfoCenter
+internal static class ElementMetadataService
 {
-    static ElementInfoCenter()
+    static ElementMetadataService()
     {
         allInfo = [
             new Pdfml(),
@@ -62,7 +62,7 @@ internal static class ElementInfoCenter
             new PageNumber(),
             new PageTotal(),
             new LineBreak(),
-            new Document(),
+            new DocumentElement(),
             new PageBreak(),
             new StyleElement(),
             new Include(),
@@ -74,7 +74,7 @@ internal static class ElementInfoCenter
     }
 
     #region ElementInfo Definitions
-    public class Pdfml : ElementInfo
+    public class Pdfml : ElementMetadata
     {
         public Pdfml()
         {
@@ -117,7 +117,7 @@ internal static class ElementInfoCenter
         }
     }
 
-    public class Head : ElementInfo
+    public class Head : ElementMetadata
     {
         public Head()
         {
@@ -144,7 +144,7 @@ internal static class ElementInfoCenter
         }
     }
 
-    public class Contents : ElementInfo
+    public class Contents : ElementMetadata
     {
         public Contents()
         {
@@ -193,7 +193,7 @@ internal static class ElementInfoCenter
             TagName = "footer";
         }
     }
-    public abstract class HeaderOrFooter : ElementInfo
+    public abstract class HeaderOrFooter : ElementMetadata
     {
         public HeaderOrFooter()
         {
@@ -234,7 +234,7 @@ internal static class ElementInfoCenter
         }
     }
 
-    public class Grid : ElementInfo
+    public class Grid : ElementMetadata
     {
         public Grid()
         {
@@ -265,7 +265,7 @@ internal static class ElementInfoCenter
         }
     }
 
-    public class Row : ElementInfo
+    public class Row : ElementMetadata
     {
         public Row()
         {
@@ -390,7 +390,7 @@ internal static class ElementInfoCenter
             TagName = "col-12";
         }
     }
-    public abstract class Col : ElementInfo
+    public abstract class Col : ElementMetadata
     {
         public Col()
         {
@@ -419,7 +419,7 @@ internal static class ElementInfoCenter
         }
     }
 
-    public class Table : ElementInfo
+    public class Table : ElementMetadata
     {
         public Table()
         {
@@ -516,7 +516,7 @@ internal static class ElementInfoCenter
             return e.Children.Count() == 0;
         }
     }
-    public abstract class TableSection : ElementInfo
+    public abstract class TableSection : ElementMetadata
     {
         public TableSection()
         {
@@ -539,7 +539,7 @@ internal static class ElementInfoCenter
         }
     }
 
-    public class TableRow : ElementInfo
+    public class TableRow : ElementMetadata
     {
         public TableRow()
         {
@@ -587,7 +587,7 @@ internal static class ElementInfoCenter
             TagName = "td";
         }
     }
-    public abstract class TableRowContent : ElementInfo
+    public abstract class TableRowContent : ElementMetadata
     {
         public TableRowContent()
         {
@@ -631,7 +631,7 @@ internal static class ElementInfoCenter
             TagName = "ul";
         }
     }
-    public abstract class List : ElementInfo
+    public abstract class List : ElementMetadata
     {
         public List()
         {
@@ -665,7 +665,7 @@ internal static class ElementInfoCenter
         }
     }
 
-    public class ListItem : ElementInfo
+    public class ListItem : ElementMetadata
     {
         public ListItem()
         {
@@ -696,7 +696,7 @@ internal static class ElementInfoCenter
         }
     }
 
-    public class Img : ElementInfo
+    public class Img : ElementMetadata
     {
         public Img()
         {
@@ -877,7 +877,7 @@ internal static class ElementInfoCenter
                 ElementGroup.HasChildren];
         }
     }
-    public abstract class TextBase : ElementInfo
+    public abstract class TextBase : ElementMetadata
     {
         public TextBase()
         {
@@ -937,7 +937,7 @@ internal static class ElementInfoCenter
             IsTagSelfClosing = true;
         }
     }
-    public abstract class UnstyleableInlineText : ElementInfo
+    public abstract class UnstyleableInlineText : ElementMetadata
     {
         public UnstyleableInlineText()
         {
@@ -948,7 +948,7 @@ internal static class ElementInfoCenter
         }
     }
 
-    public class PageBreak : ElementInfo
+    public class PageBreak : ElementMetadata
     {
         public PageBreak()
         {
@@ -957,9 +957,9 @@ internal static class ElementInfoCenter
         }
     }
 
-    public class Document : ElementInfo
+    public class DocumentElement : ElementMetadata
     {
-        public Document()
+        public DocumentElement()
         {
             TagName = Elements.TagName.document;
             IsTagSelfClosing = false;
@@ -995,7 +995,7 @@ internal static class ElementInfoCenter
         }
     }
 
-    public class StyleElement : ElementInfo
+    public class StyleElement : ElementMetadata
     {
         public StyleElement()
         {
@@ -1005,7 +1005,7 @@ internal static class ElementInfoCenter
         }
     }
 
-    public class Include : ElementInfo
+    public class Include : ElementMetadata
     {
         public Include()
         {
@@ -1085,7 +1085,7 @@ internal static class ElementInfoCenter
             }
         }
     }
-    public abstract class BindingElementBase : ElementInfo
+    public abstract class BindingElementBase : ElementMetadata
     {
         public BindingElementBase()
         {
@@ -1108,10 +1108,10 @@ internal static class ElementInfoCenter
     /// </summary>
     /// <param name="tagName">The element's tag name</param>
     /// <returns>ElementInfo for the given element, or null if no info exists for it</returns>
-    public static ElementInfo? GetInfoFor(string tagName)
+    public static ElementMetadata? GetInfoFor(string tagName)
     {
         return allInfo.FirstOrDefault(e => e.TagName == tagName.ToLower());
     }
 
-    private static ElementInfo[] allInfo;
+    private static ElementMetadata[] allInfo;
 }

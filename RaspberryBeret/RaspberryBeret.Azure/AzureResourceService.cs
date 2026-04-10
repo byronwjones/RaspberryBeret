@@ -1,6 +1,9 @@
 ﻿using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 using RaspberryBeret.ReferenceData;
+using System;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace RaspberryBeret.Azure;
 
@@ -30,9 +33,25 @@ internal class AzureResourceService : ICloudResourceService
         return data;
     }
 
-    private CloudBlobContainer GetContainer(CloudResource cloudResource)
+    public async Task SaveBlob(byte[] data, CloudResource cloudResource)
     {
-        return blobClient.GetContainerReference(cloudResource.Container.ToLower());
+        var blob = await GetBlob(cloudResource);
+        if(blob is null)
+        {
+            throw new Exception("Write failure: Storage container does not exist, and could not be created");
+        }
+
+        await blob.UploadFromByteArrayAsync(data, 0, data.Length);
+    }
+
+    private async Task<CloudBlobContainer> GetContainer(CloudResource cloudResource, bool createIfNotExists)
+    {
+        var container = blobClient.GetContainerReference(cloudResource.Container.ToLower());
+        if (createIfNotExists)
+        {
+            await container.CreateIfNotExistsAsync();
+        }
+        return container;
     }
 
     /// <summary>
@@ -42,7 +61,7 @@ internal class AzureResourceService : ICloudResourceService
     /// <returns>Blob reference, or null if its container does not exist</returns>
     private async Task<CloudBlockBlob?> GetBlob(CloudResource reference)
     {
-        var container = GetContainer(reference);
+        var container = await GetContainer(reference, createIfNotExists: false);
         var containerExists = await container.ExistsAsync();
         if (containerExists == false) { return null; }
         return container.GetBlockBlobReference(reference.ResourceName);
