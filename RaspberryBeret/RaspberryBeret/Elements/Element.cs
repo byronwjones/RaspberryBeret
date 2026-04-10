@@ -80,7 +80,7 @@ internal class Element
         }
     }
 
-    public BindingModel? DataModel { get; set; }
+    public BindingModel DataModel { get; set; } = new BindingModel();
 
     public HashSet<string> Classes { get; private set; } = new HashSet<string>();
 

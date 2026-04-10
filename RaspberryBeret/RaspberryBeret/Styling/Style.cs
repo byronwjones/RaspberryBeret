@@ -1,10 +1,6 @@
 ﻿namespace RaspberryBeret.Styling;
 internal class Style
 {
-    public Style(StyleInfo metadata, int specificity, bool important)
-    {
-        init(metadata, specificity, important);
-    }
     public Style(StyleInfo metadata, int specificity, bool important,
         StyleValue value)
     {
@@ -16,7 +12,7 @@ internal class Style
     public StyleInfo Metadata { get; private set; } = new Border(); // arbitrary -- value set simply to appease the compiler
     public int Specificity { get; private set; }
     public bool Important { get; set; }
-    public StyleValue? Value { get; set; }
+    public StyleValue Value { get; set; }
 
     private void init(StyleInfo metadata, int specificity, bool important)
     {

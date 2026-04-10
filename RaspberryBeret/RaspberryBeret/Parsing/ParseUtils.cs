@@ -1,4 +1,5 @@
-﻿using RaspberryBeret.Elements;
+﻿using BWJ.Core;
+using RaspberryBeret.Elements;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -62,13 +63,9 @@ internal static class ParseUtils
     /// </summary>
     /// <param name="text">Input string</param>
     /// <returns>Input string with compressed whitespaces</returns>
-    public static string? NormalizeWhitespace(string text)
+    public static string NormalizeWhitespace(string text)
     {
-        if (text == null)
-        {
-            return null;
-        }
-
+        MethodGuard.NoNull(new { text });
         return Regex.Replace(text, @"[\s]+", " ").Trim();
     }
 
@@ -77,7 +74,7 @@ internal static class ParseUtils
     /// </summary>
     /// <param name="pdfml">Formatted PDFML text string</param>
     /// <returns>'Flattened' PDFML</returns>
-    public static string FlattenTemplate(string pdfml)
+    public static string FlattenTemplate(string? pdfml)
     {
         if (pdfml == null)
         {
@@ -139,7 +136,7 @@ internal static class ParseUtils
     /// relative location of the PDFML file</param>
     /// <returns>Fully-qualified file path, or null or path can not be resolved,
     /// or file does not exist</returns>
-    public static string? ResolveSourcePath(string origin, string sourcePath)
+    public static string? ResolveSourcePath(string? origin, string sourcePath)
     {
         if (string.IsNullOrWhiteSpace(sourcePath)) { return null; }
 

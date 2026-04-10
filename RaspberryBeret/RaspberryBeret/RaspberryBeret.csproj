@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="BWJ.Core" Version="1.7.1" />
+    <PackageReference Include="BWJ.Net.Http.FluentHttpClient" Version="0.6.1" />
   </ItemGroup>
 
 </Project>
