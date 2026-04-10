@@ -1,4 +1,6 @@
-﻿namespace RaspberryBeret.DataBinding;
+﻿using System.Collections.Generic;
+
+namespace RaspberryBeret.DataBinding;
 public class BindingModel
 {
     public BindingModel()
